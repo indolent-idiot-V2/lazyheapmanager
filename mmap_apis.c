@@ -13,12 +13,12 @@ void mmap_init(){
 static void * 
 allocate_new_pages(int num_of_pages){
     char* start_ptr = mmap(
-			   0,
-                           num_of_pages*PAZE_SIZE,
-			   PROT_READ|PROT_WRITE|PROT_EXEC,
-                           MAP_ANON|MAP_PRIVATE,
-                           0,0
-			);
+    0,                           // Let the kernel choose the memory address
+    num_of_pages * PAGE_SIZE,    // The size of the mapping in bytes
+    PROT_READ | PROT_WRITE | PROT_EXEC,  // Read, write, and execute permissions
+    MAP_ANON | MAP_PRIVATE,      // Anonymous mapping, private to the process
+    0, 0                         // No file descriptor, offset 0
+);
     if(start_ptr == NULL){
         printf("ERROR: Allocation of memory failed");
         return NULL;
